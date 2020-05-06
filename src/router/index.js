@@ -13,7 +13,7 @@ function filterTopRouterMap(name){
 }
 
 /**
- * 1、roles:后台返回的权限结构;
+ * 1、figure:后台返回的权限结构;
  *
  */
 //手动跳转的页面白名单
@@ -95,7 +95,7 @@ export const asyncRouterMap = [
         name: 'approval',
         component: Layout,
         meta: {
-            title: '审批',
+            title: '审批流程',
             icon: 'iconuser',
         },
         noDropdown:true,
@@ -103,7 +103,7 @@ export const asyncRouterMap = [
             {
                 path: 'approval',
                 meta:{
-                    title: '审批',
+                    title: '审批流程',
                     icon: 'iconuser',
                     routerType: 'leftmenu'
                 },
@@ -249,7 +249,7 @@ export const asyncRouterMap = [
         meta: {
             title: '权限设置',
             icon: 'iconpermission',
-            roles: ['admin', 'editor'] // you can set roles in root nav
+            figure: ['admin', 'editor'] // you can set figure in root nav
         },
         component: Layout,
         redirect: '/permission/page',
@@ -258,7 +258,7 @@ export const asyncRouterMap = [
             name: 'pagePer',
             meta: {
                 title: '页面权限',
-                roles: ['admin'] // or you can only set roles in sub nav
+                figure: ['admin'] // or you can only set figure in sub nav
             },
             component: () => import('@/page/permission/page'),
         }, {
@@ -266,7 +266,7 @@ export const asyncRouterMap = [
             name: 'directivePer',
             meta: {
                 title: '按钮权限',
-                roles:['editor']
+                figure:['editor']
             },
             component: () => import('@/page/permission/directive'),
         }]

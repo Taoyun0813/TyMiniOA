@@ -9,19 +9,19 @@ const user  = {
     name:'',
     avatar:'',
     token: getToken('Token'),
-    roles: [],
+    figure: [],
     browserHeaderTitle: mUtils.getStore('browserHeaderTitle') || 'TYAdmin'
   },
   getters : {
     token: state => state.token,
-    roles: state => state.roles,
+    figure: state => state.figure,
     avatar: state => state.avatar,
     name: state => state.name,
     browserHeaderTitle: state => state.browserHeaderTitle,
   },
   mutations: {
-    SET_ROLES: (state, roles) => {
-        state.roles = roles
+    SET_ROLES: (state, figure) => {
+        state.figure = figure
     },
     SET_BROWSERHEADERTITLE: (state, action) => {
         state.browserHeaderTitle = action.browserHeaderTitle
@@ -51,7 +51,7 @@ const user  = {
           setToken("Token",token)
           getUserInfo({"token":token}).then(res => {
             let data = res.data.userList;
-            commit('SET_ROLES', data.roles)
+            commit('SET_ROLES', data.figure)
             commit('SET_NAME', data.name)
             commit('SET_AVATAR', data.avatar)
             resolve()

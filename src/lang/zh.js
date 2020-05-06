@@ -8,7 +8,7 @@ const zh = {
       hi: '您好',
       index: '首页',
       userManage: '员工信息',
-      approval: '审批',
+      approval: '审批流程',
       share: '分享功能',
       infoManage: '信息管理',
       infoShow: '个人信息',
@@ -37,7 +37,7 @@ const zh = {
       wechatNumber: '微信号'
     },
     index:{
-      yearLoss:'年度总盈亏',
+      yearLoss:'年度总盈利',
       yearProfit:'年度收益率',
       potentialInvestor:'潜在投资人',
       intentionInvestor:'意向投资人',

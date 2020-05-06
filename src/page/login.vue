@@ -4,7 +4,7 @@
 	  		<section class="form_contianer">
 			     <div class='titleArea rflex'>
 					<img class="logo" :src="logo" alt="TY">
-					<span class='title'>MINI<i>OA</i></span>
+					<span class='title'><i>MINIOA</i></span>
 				</div>
 		    	<el-form :model="loginForm" :rules="rules" ref="loginForm" class="loginForm">
 					<el-form-item prop="username" class="login-item">
@@ -18,11 +18,7 @@
 					<el-form-item>
 				    	<el-button type="primary"  @click="submitForm('loginForm')" class="submit_btn">登录</el-button>
 				  	</el-form-item>
-					<div class="tiparea">
-						<p class="wxtip">温馨提示：</p>
-						<p class="tip">用户名为：admin/editor<span>(可用于切换权限)</span></p>
-						<p class="tip">密码为：123456</p>
-					</div>
+
 					<div class="sanFangArea">
 						<p class="title">第三方账号登录</p>
 						<ul class="rflex">
@@ -55,7 +51,7 @@
 				logo: logoImg,
 				loginForm: {
 					username: 'admin',
-					password: '123456'
+					password: '5201101'
 				},
 				rules: {
 					username: [
@@ -80,23 +76,36 @@
                 });
             },
 		    submitForm(loginForm) {
-				if ( this.loginForm.password !== '123456' ) {
+				/*if (this.loginForm.username !== 'admin') {
 					this.$message({
 						type: 'warning',
-						message: '密码错误'
+						message: 'sds'
+					})
+				}*/
+				if ( this.loginForm.username !=='admin' && this.loginForm.username !== 'editor') {
+					this.$message({
+						type: 'error',
+						message: '账号错误'
 					});
 				}else {
-					this.$refs[loginForm].validate((valid) => {
-						if (valid) {
-							let userinfo = this.loginForm;
-							login(userinfo).then( res => {
-								let userList = res.data.userList;
-								setToken("Token",userList.token)
-								this.$router.push({ path: '/' })
-								this.$store.dispatch('initLeftMenu'); //设置左边菜单始终为展开状态
-							})
-						}
-					});
+					if (this.loginForm.password !== '5201101') {
+						this.$message({
+							type: 'error',
+							message: '密码错误'
+						});
+					} else {
+						this.$refs[loginForm].validate((valid) => {
+							if (valid) {
+								let userinfo = this.loginForm;
+								login(userinfo).then( res => {
+									let userList = res.data.userList;
+									setToken("Token",userList.token)
+									this.$router.push({ path: '/' })
+									this.$store.dispatch('initLeftMenu'); //设置左边菜单始终为展开状态
+								})
+							}
+						});
+					}
 				}
 			}
 		}
@@ -116,7 +125,7 @@
 		top: 50%;
         left: 50%;
 		transform: translate(-50%,-50%);
-		background: #fff;
+		background: rgba(35,100,133,0.6);
 		width:370px;
 		border-radius: 5px;
 		padding: 25px;
@@ -134,7 +143,7 @@
 			}
 			.title{
 				i{
-				   color: #FF6C60;
+				   color: #0b9ee9;
 				}
 			}
 		}
@@ -190,8 +199,8 @@
 	}
 	.loginForm{
 		.el-button--primary{
-			background-color:#FF7C1A;
-			border:1px solid #FF7C1A;
+			background-color:rgba(23,121,157,0.6);
+			border:1px solid #03759d;
 		}
 	}
 	.sanFangArea{

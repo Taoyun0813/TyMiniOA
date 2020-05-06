@@ -1,69 +1,187 @@
 <template>
     <div>
-        <div class="node-wrap" v-if="nodeConfig.type!==4">
-            <div class="node-wrap-box" :class="(nodeConfig.type===0?'start-node ':'')+(isTried&&nodeConfig.error?'active error':'')">
+        <div
+            class="node-wrap"
+            v-if="nodeConfig.type!==4"
+        >
+            <div
+                class="node-wrap-box"
+                :class="(nodeConfig.type===0?'start-node ':'')+(isTried&&nodeConfig.error?'active error':'')"
+            >
                 <div>
-                    <div class="title" :style="'background: rgb('+ ['87, 106, 149','255, 148, 62','50, 150, 250'][nodeConfig.type] +');'">
-                        <span class="iconfont" v-show="nodeConfig.type===1"></span>
-                        <span class="iconfont" v-show="nodeConfig.type===2"></span>
+                    <div
+                        class="title"
+                        :style="'background: rgb('+ ['87, 106, 149','255, 148, 62','50, 150, 250'][nodeConfig.type] +');'"
+                    >
+                        <span
+                            class="iconfont"
+                            v-show="nodeConfig.type===1"
+                        ></span>
+                        <span
+                            class="iconfont"
+                            v-show="nodeConfig.type===2"
+                        ></span>
                         <span v-if="nodeConfig.type === 0">{{ nodeConfig.nodeName }}</span>
-                        <input type="text" class="ant-input editable-title-input" v-if="nodeConfig.type !== 0 && isInput"
-                        @blur="blurEvent()" @focus="$event.currentTarget.select()" v-focus
-                        v-model="nodeConfig.nodeName" :placeholder="placeholderList[nodeConfig.type]">
-                        <span class="editable-title" @click="clickEvent()" v-if="nodeConfig.type!==0&&!isInput">{{nodeConfig.nodeName}}</span>
-                        <i class="anticon anticon-close close" v-if="nodeConfig.type!==0" @click="delNode()"></i>
+                        <input
+                            type="text"
+                            class="ant-input editable-title-input"
+                            v-if="nodeConfig.type !== 0 && isInput"
+                            @blur="blurEvent()"
+                            @focus="$event.currentTarget.select()"
+                            v-focus
+                            v-model="nodeConfig.nodeName"
+                            :placeholder="placeholderList[nodeConfig.type]"
+                        >
+                        <span
+                            class="editable-title"
+                            @click="clickEvent()"
+                            v-if="nodeConfig.type!==0&&!isInput"
+                        >{{nodeConfig.nodeName}}</span>
+                        <i
+                            class="anticon anticon-close close"
+                            v-if="nodeConfig.type!==0"
+                            @click="delNode"
+                        ></i>
                     </div>
-                    <div class="content" @click="setPerson">
-                        <div class="text" v-if="nodeConfig.type===0">{{arrToStr(flowPermission)?arrToStr(flowPermission):'TY'}}</div>
-                        <div class="text" v-if="nodeConfig.type===1">
-                            <span class="placeholder" v-if="!setApproverStr(nodeConfig)">请选择{{placeholderList[nodeConfig.type]}}</span>
+                    <div
+                        class="content"
+                        @click="setPerson"
+                    >
+                        <div
+                            class="text"
+                            v-if="nodeConfig.type===0"
+                        >{{arrToStr(flowPermission)?arrToStr(flowPermission):'TY'}}</div>
+                        <div
+                            class="text"
+                            v-if="nodeConfig.type===1"
+                        >
+                            <span
+                                class="placeholder"
+                                v-if="!setApproverStr(nodeConfig)"
+                            >请选择{{placeholderList[nodeConfig.type]}}</span>
                             {{setApproverStr(nodeConfig)}}
                         </div>
-                        <div class="text" v-if="nodeConfig.type===2">
-                            <span class="placeholder" v-if="!copyerStr(nodeConfig)">请选择{{placeholderList[nodeConfig.type]}}</span>
+                        <div
+                            class="text"
+                            v-if="nodeConfig.type===2"
+                        >
+                            <span
+                                class="placeholder"
+                                v-if="!copyerStr(nodeConfig)"
+                            >请选择{{placeholderList[nodeConfig.type]}}</span>
                             {{copyerStr(nodeConfig)}}
                         </div>
                         <i class="anticon anticon-right arrow"></i>
                     </div>
-                    <div class="error_tip" v-if="isTried&&nodeConfig.error">
-                        <i class="anticon anticon-exclamation-circle" style="color: rgb(242, 86, 67);"></i>
+                    <div
+                        class="error_tip"
+                        v-if="isTried&&nodeConfig.error"
+                    >
+                        <i
+                            class="anticon anticon-exclamation-circle"
+                            style="color: rgb(242, 86, 67);"
+                        ></i>
                     </div>
                 </div>
             </div>
-            <addNode :childNodeP.sync="nodeConfig.childNode"></addNode>
+            <addNode  :childNodeP.sync="nodeConfig.childNode"></addNode>
         </div>
-        <div class="branch-wrap" v-if="nodeConfig.type===4">
+        <div
+            class="branch-wrap"
+            v-if="nodeConfig.type===4"
+        >
             <div class="branch-box-wrap">
                 <div class="branch-box">
-                    <button class="add-branch" @click="addTerm">添加条件</button>
-                    <div class="col-box" v-for="(item,index) in nodeConfig.conditionNodes" :key="index" v-if="nodeConfig.conditionNodes.length < 5 ? nodeConfig.conditionNodes.length : nodeConfig.conditionNodes.length = 4">
+                    <button
+                        class="add-branch"
+                        @click="addTerm"
+                    >添加条件</button>
+                    <div
+                        class="col-box"
+                        v-for="(item,index) in nodeConfig.conditionNodes"
+                        :key="index"
+                        v-if="nodeConfig.conditionNodes.length < 5 ? nodeConfig.conditionNodes.length : nodeConfig.conditionNodes.length = 4"
+                    >
                         <div class="condition-node">
                             <div class="condition-node-box">
-                                <div class="auto-judge" :class="isTried&&item.error?'error active':''">
-                                    <div class="sort-left" v-if="index!==0" @click="arrTransfer(index,-1)">&lt;</div>
+                                <div
+                                    class="auto-judge"
+                                    :class="isTried&&item.error?'error active':''"
+                                >
+                                    <div
+                                        class="sort-left"
+                                        v-if="index!==0"
+                                        @click="arrTransfer(index,-1)"
+                                    >&lt;</div>
                                     <div class="title-wrapper">
-                                        <input type="text" class="ant-input editable-title-input" v-if="isInputList[index]"
-                                        @blur="blurEvent(index)" @focus="$event.currentTarget.select()" v-focus v-model="item.nodeName">
-                                        <span class="editable-title" @click="clickEvent(index)" v-if="!isInputList[index]">{{ item.nodeName }}</span>
-                                        <span class="priority-title" @click="setPerson(item.priorityLevel)">优先级{{ item.priorityLevel }}</span>
-                                        <i class="anticon anticon-close close" @click="delTerm(index)"></i>
+                                        <input
+                                            type="text"
+                                            class="ant-input editable-title-input"
+                                            v-if="isInputList[index]"
+                                            @blur="blurEvent(index)"
+                                            @focus="$event.currentTarget.select()"
+                                            v-focus
+                                            v-model="item.nodeName"
+                                        >
+                                        <span
+                                            class="editable-title"
+                                            @click="clickEvent(index)"
+                                            v-if="!isInputList[index]"
+                                        >{{ item.nodeName }}</span>
+                                        <span
+                                            class="priority-title"
+                                            @click="setPerson(item.priorityLevel)"
+                                        >优先级{{ item.priorityLevel }}</span>
+                                        <i
+                                            class="anticon anticon-close close"
+                                            @click="delTerm(index)"
+                                        ></i>
                                     </div>
-                                    <div class="sort-right" v-if="index!==nodeConfig.conditionNodes.length-1"
-                                        @click="arrTransfer(index)">&gt;</div>
-                                    <div class="content" @click="setPerson(item.priorityLevel)">{{conditionStr(item,index)}}</div>
-                                    <div class="error_tip" v-if="isTried&&item.error">
-                                        <i class="anticon anticon-exclamation-circle" style="color: rgb(242, 86, 67);"></i>
+                                    <div
+                                        class="sort-right"
+                                        v-if="index!==nodeConfig.conditionNodes.length-1"
+                                        @click="arrTransfer(index)"
+                                    >&gt;</div>
+                                    <div
+                                        class="content"
+                                        @click="setPerson(item.priorityLevel)"
+                                    >{{conditionStr(item,index)}}</div>
+                                    <div
+                                        class="error_tip"
+                                        v-if="isTried&&item.error"
+                                    >
+                                        <i
+                                            class="anticon anticon-exclamation-circle"
+                                            style="color: rgb(242, 86, 67);"
+                                        ></i>
                                     </div>
                                 </div>
                                 <addNode :childNodeP.sync="item.childNode"></addNode>
                             </div>
                         </div>
-                        <nodeWrap v-if="item.childNode && item.childNode" :nodeConfig.sync="item.childNode" :tableId="tableId"
-                        :isTried.sync="isTried" :directorMaxLevel="directorMaxLevel"></nodeWrap>
-                        <div class="top-left-cover-line" v-if="index===0"></div>
-                        <div class="bottom-left-cover-line" v-if="index===0"></div>
-                        <div class="top-right-cover-line" v-if="index===nodeConfig.conditionNodes.length-1"></div>
-                        <div class="bottom-right-cover-line" v-if="index===nodeConfig.conditionNodes.length-1"></div>
+                        <nodeWrap
+                            v-if="item.childNode && item.childNode"
+                            :nodeConfig.sync="item.childNode"
+                            :tableId="tableId"
+                            :isTried.sync="isTried"
+                            :directorMaxLevel="directorMaxLevel"
+                        ></nodeWrap>
+                        <div
+                            class="top-left-cover-line"
+                            v-if="index===0"
+                        ></div>
+                        <div
+                            class="bottom-left-cover-line"
+                            v-if="index===0"
+                        ></div>
+                        <div
+                            class="top-right-cover-line"
+                            v-if="index===nodeConfig.conditionNodes.length-1"
+                        ></div>
+                        <div
+                            class="bottom-right-cover-line"
+                            v-if="index===nodeConfig.conditionNodes.length-1"
+                        ></div>
                     </div>
                 </div>
                 <addNode :childNodeP.sync="nodeConfig.childNode"></addNode>
@@ -251,7 +369,7 @@
                         <div class="person_tree l">
                             <input type="text" placeholder="搜索角色" v-model="approverRoleSearchName" @input="getDebounceData($event,2)">
                             <ul>
-                                <li v-for="(item,index) in roles" :key="index+'b'" class="check_box not"
+                                <li v-for="(item,index) in figure" :key="index+'b'" class="check_box not"
                                     :class="toggleClass(roleList,item,'roleId')&&'active'" @click="roleList=[item]">
                                     <a :title="item.description"><img src="@/assets/images/icon_role.png">{{item.roleName}}</a>
                                 </li>
@@ -320,7 +438,7 @@
                                 </li>
                             </ul>
                             <ul style="height: 360px;" v-if="activeName===2">
-                                <li v-for="(item,index) in roles" :key="index+'c'" class="check_box">
+                                <li v-for="(item,index) in figure" :key="index+'c'" class="check_box">
                                     <a :class="toggleClass(copyerRoleList,item,'roleId')&&'active'" @click="toChecked(copyerRoleList,item,'roleId')" :title="item.description">
                                         <img src="@/assets/images/icon_role.png">{{item.roleName}}</a>
                                 </li>
@@ -445,7 +563,7 @@
                                 </li>
                             </ul>
                             <ul style="height: 360px;" v-if="activeName==2">
-                                <li v-for="(item,index) in roles" :key="index+'c'" class="check_box">
+                                <li v-for="(item,index) in figure" :key="index+'c'" class="check_box">
                                     <a :class="toggleClass(conditionRoleList,item,'roleId')&&'active'" @click="toChecked(conditionRoleList,item,'roleId')" :title="item.description">
                                         <img src="@/assets/images/icon_role.png">{{item.roleName}}</a>
                                 </li>
@@ -486,15 +604,28 @@
             </div>
         </el-drawer> -->
 
-        <nodeWrap v-if="nodeConfig.childNode && nodeConfig.childNode" :nodeConfig.sync="nodeConfig.childNode" :tableId="tableId"
-        :isTried.sync="isTried" :directorMaxLevel="directorMaxLevel"></nodeWrap>
+        <nodeWrap
+            v-if="nodeConfig.childNode && nodeConfig.childNode"
+            :nodeConfig.sync="nodeConfig.childNode"
+            :tableId="tableId"
+            :isTried.sync="isTried"
+            :directorMaxLevel="directorMaxLevel"
+        ></nodeWrap>
     </div>
 </template>
 <script>
-    import addNode from "./addNode"
+import {mapActions,mapGetters} from "vuex"
+
+import addNode from "./addNode";
 export default {
-    name:"nodeWrap",
-    props: ["nodeConfig", "flowPermission", "directorMaxLevel", "isTried", "tableId"],
+    name: "nodeWrap",
+    props: [
+        "nodeConfig",
+        "flowPermission",
+        "directorMaxLevel",
+        "isTried",
+        "tableId"
+    ],
     data() {
         return {
             placeholderList: ["发起人", "审核人", "抄送人"],
@@ -513,7 +644,7 @@ export default {
             approverConfig: {},
             approverEmplyessList: [],
             approverSearchName: "",
-            roles: [],
+            figure: [],
             roleList: [],
             approverRoleSearchName: "",
             copyerDrawer: false,
@@ -528,7 +659,7 @@ export default {
             conditionVisible: false,
             conditionConfig: {},
             conditionsConfig: {
-                conditionNodes: [],
+                conditionNodes: []
             },
             bPriorityLevel: "",
             conditions: [],
@@ -538,71 +669,116 @@ export default {
             conditionDepartmentList: [],
             conditionEmployessList: [],
             conditionRoleList: [],
-        }
+            Num:this.boxNum + 1
+        };
+    },
+    computed:{
+        ...mapGetters(["boxNum"])
     },
     mounted() {
-
-        console.log("nodeConfig",this.nodeConfig)
-        console.log("flowPermission",this.flowPermission)
-        console.log("directorMaxLevel",this.directorMaxLevel)
-        console.log("isTried",this.isTried)
+        // console.log("nodeConfig",this.nodeConfig)
+        // console.log("flowPermission",this.flowPermission)
+        // console.log("directorMaxLevel",this.directorMaxLevel)
+        // console.log("isTried",this.isTried)
+        if (this.nodeConfig && this.nodeConfig.type !== 4) {
+            // this.boxNum = this.boxNum++
+            // this.$emit("update:boxNum", this.boxNum+1)
+            this.setAddBoxNum()
+        }
 
         if (this.nodeConfig.type === 1) {
-            this.nodeConfig.error = !this.setApproverStr(this.nodeConfig)
+            this.nodeConfig.error = !this.setApproverStr(this.nodeConfig);
         } else if (this.nodeConfig.type === 2) {
-            this.nodeConfig.error = ! this.copyerStr(this.nodeConfig)
+            this.nodeConfig.error = !this.copyerStr(this.nodeConfig);
         } else if (this.nodeConfig.type === 4) {
             for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) === "请设置条件" && i !== this.nodeConfig.conditionNodes.length - 1
+                this.nodeConfig.conditionNodes[i].error =
+                    this.conditionStr(this.nodeConfig.conditionNodes[i], i) ===
+                        "请设置条件" &&
+                    i !== this.nodeConfig.conditionNodes.length - 1;
             }
         }
     },
     methods: {
+        ...mapActions(["setAddBoxNum","setReduceBoxNum"]),
         clickEvent(index) {
             if (index || index === 0) {
-                this.$set(this.isInputList, index, true)
+                this.$set(this.isInputList, index, true);
             } else {
                 this.isInput = true;
             }
         },
         blurEvent(index) {
             if (index || index === 0) {
-                this.$set(this.isInputList, index, false)
-                this.nodeConfig.conditionNodes[index].nodeName = this.nodeConfig.conditionNodes[index].nodeName ? this.nodeConfig.conditionNodes[index].nodeName : "编辑条件"
+                this.$set(this.isInputList, index, false);
+                this.nodeConfig.conditionNodes[index].nodeName = this.nodeConfig
+                    .conditionNodes[index].nodeName
+                    ? this.nodeConfig.conditionNodes[index].nodeName
+                    : "编辑条件";
             } else {
                 this.isInput = false;
-                this.nodeConfig.nodeName = this.nodeConfig.nodeName ? this.nodeConfig.nodeName : this.placeholderList[this.nodeConfig.type]
+                this.nodeConfig.nodeName = this.nodeConfig.nodeName
+                    ? this.nodeConfig.nodeName
+                    : this.placeholderList[this.nodeConfig.type];
             }
         },
         conditionStr(item, index) {
             var { conditionList, nodeUserList } = item;
             if (conditionList.length === 0) {
-                return (index === this.nodeConfig.conditionNodes.length - 1) && this.nodeConfig.conditionNodes[0].conditionList.length !== 0 ? '其他条件进入此流程' : '请设置条件'
+                return index === this.nodeConfig.conditionNodes.length - 1 &&
+                    this.nodeConfig.conditionNodes[0].conditionList.length !== 0
+                    ? "其他条件进入此流程"
+                    : "请设置条件";
             } else {
-                let str = ""
+                let str = "";
                 for (var i = 0; i < conditionList.length; i++) {
-                    var { columnId, columnType, showType, showName, optType, zdy1, opt1, zdy2, opt2, fixedDownBoxValue } = conditionList[i];
+                    var {
+                        columnId,
+                        columnType,
+                        showType,
+                        showName,
+                        optType,
+                        zdy1,
+                        opt1,
+                        zdy2,
+                        opt2,
+                        fixedDownBoxValue
+                    } = conditionList[i];
                     if (columnId === 0) {
                         if (nodeUserList.length !== 0) {
-                            str += '发起人属于：'
-                            str += nodeUserList.map(item => { return item.name }).join("或") + " 并且 "
+                            str += "发起人属于：";
+                            str +=
+                                nodeUserList
+                                    .map(item => {
+                                        return item.name;
+                                    })
+                                    .join("或") + " 并且 ";
                         }
                     }
                     if (columnType === "String" && showType === "3") {
                         if (zdy1) {
-                            str += showName + '属于：' + this.dealStr(zdy1, JSON.parse(fixedDownBoxValue)) + " 并且 "
+                            str +=
+                                showName +
+                                "属于：" +
+                                this.dealStr(
+                                    zdy1,
+                                    JSON.parse(fixedDownBoxValue)
+                                ) +
+                                " 并且 ";
                         }
                     }
                     if (columnType === "Double") {
                         if (optType !== 6 && zdy1) {
-                            var optTypeStr = ["", "<", ">", "≤", "=", "≥"][optType]
-                            str += `${showName} ${optTypeStr} ${zdy1} 并且 `
+                            var optTypeStr = ["", "<", ">", "≤", "=", "≥"][
+                                optType
+                            ];
+                            str += `${showName} ${optTypeStr} ${zdy1} 并且 `;
                         } else if (optType === 6 && zdy1 && zdy2) {
-                            str += `${zdy1} ${opt1} ${showName} ${opt2} ${zdy2} 并且 `
+                            str += `${zdy1} ${opt1} ${showName} ${opt2} ${zdy2} 并且 `;
                         }
                     }
                 }
-                return str ? str.substring(0, str.length - 4) : '请设置条件'
+                return str ? str.substring(0, str.length - 4) : "请设置条件";
             }
         },
         dealStr(str, obj) {
@@ -611,11 +787,11 @@ export default {
             for (var elem in obj) {
                 list.map(item => {
                     if (item === elem) {
-                        arr.push(obj[elem].value)
+                        arr.push(obj[elem].value);
                     }
-                })
+                });
             }
-            return arr.join("或")
+            return arr.join("或");
         },
         addConditionRole() {
             this.conditionRoleSearchName = "";
@@ -626,7 +802,11 @@ export default {
             this.conditionEmployessList = [];
             this.conditionRoleList = [];
             for (var i = 0; i < this.conditionConfig.nodeUserList.length; i++) {
-                var { type, name, targetId } = this.conditionConfig.nodeUserList[i];
+                var {
+                    type,
+                    name,
+                    targetId
+                } = this.conditionConfig.nodeUserList[i];
                 if (type === 1) {
                     this.conditionEmployessList.push({
                         employeeName: name,
@@ -652,40 +832,52 @@ export default {
                     type: 2,
                     targetId: item.roleId,
                     name: item.roleName
-                })
+                });
             });
             this.conditionDepartmentList.map(item => {
                 this.conditionConfig.nodeUserList.push({
                     type: 3,
                     targetId: item.id,
                     name: item.departmentName
-                })
+                });
             });
             this.conditionEmployessList.map(item => {
                 this.conditionConfig.nodeUserList.push({
                     type: 1,
                     targetId: item.id,
                     name: item.employeeName
-                })
+                });
             });
             this.conditionRoleVisible = false;
         },
         addCondition() {
             this.conditionList = [];
             this.conditionVisible = true;
-            this.$axios.get("/conditions.json?tableId=" + this.tableId).then(res => {
-                this.conditions = res.data;
-                if (this.conditionConfig.conditionList) {
-                    for (var i = 0; i < this.conditionConfig.conditionList.length; i++) {
-                        var { columnId } = this.conditionConfig.conditionList[i]
-                        if (columnId === 0) {
-                            this.conditionList.push({ columnId: 0 })
-                        } else {
-                            this.conditionList.push(this.conditions.filter(item => { return item.columnId === columnId; })[0])
+            this.$axios
+                .get("/conditions.json?tableId=" + this.tableId)
+                .then(res => {
+                    this.conditions = res.data;
+                    if (this.conditionConfig.conditionList) {
+                        for (
+                            var i = 0;
+                            i < this.conditionConfig.conditionList.length;
+                            i++
+                        ) {
+                            var {
+                                columnId
+                            } = this.conditionConfig.conditionList[i];
+                            if (columnId === 0) {
+                                this.conditionList.push({ columnId: 0 });
+                            } else {
+                                this.conditionList.push(
+                                    this.conditions.filter(item => {
+                                        return item.columnId === columnId;
+                                    })[0]
+                                );
+                            }
                         }
                     }
-                }
-            })
+                });
         },
         changeOptType(item) {
             if (item.optType === 1) {
@@ -699,84 +891,138 @@ export default {
             //1.弹窗有，外面无+
             //2.弹窗有，外面有不变
             for (var i = 0; i < this.conditionList.length; i++) {
-                var { columnId, showName, columnName, showType, columnName, columnType, fixedDownBoxValue } = this.conditionList[i];
-                if (this.toggleClass(this.conditionConfig.conditionList, this.conditionList[i], "columnId")) {
+                var {
+                    columnId,
+                    showName,
+                    columnName,
+                    showType,
+                    columnName,
+                    columnType,
+                    fixedDownBoxValue
+                } = this.conditionList[i];
+                if (
+                    this.toggleClass(
+                        this.conditionConfig.conditionList,
+                        this.conditionList[i],
+                        "columnId"
+                    )
+                ) {
                     continue;
                 }
                 if (columnId === 0) {
                     this.conditionConfig.nodeUserList === [];
                     this.conditionConfig.conditionList.push({
-                        "type": 1,
-                        "columnId": columnId,
-                        "showName": '发起人'
+                        type: 1,
+                        columnId: columnId,
+                        showName: "发起人"
                     });
                 } else {
                     if (columnType === "Double") {
                         this.conditionConfig.conditionList.push({
-                            "showType": showType,
-                            "columnId": columnId,
-                            "type": 2,
-                            "showName": showName,
-                            "optType": "1",
-                            "zdy1": "2",
-                            "opt1": "<",
-                            "zdy2": "",
-                            "opt2": "<",
-                            "columnDbname": columnName,
-                            "columnType": columnType,
-                        })
+                            showType: showType,
+                            columnId: columnId,
+                            type: 2,
+                            showName: showName,
+                            optType: "1",
+                            zdy1: "2",
+                            opt1: "<",
+                            zdy2: "",
+                            opt2: "<",
+                            columnDbname: columnName,
+                            columnType: columnType
+                        });
                     } else if (columnType === "String" && showType === "3") {
                         this.conditionConfig.conditionList.push({
-                            "showType": showType,
-                            "columnId": columnId,
-                            "type": 2,
-                            "showName": showName,
-                            "zdy1": "",
-                            "columnDbname": columnName,
-                            "columnType": columnType,
-                            "fixedDownBoxValue": fixedDownBoxValue
-                        })
+                            showType: showType,
+                            columnId: columnId,
+                            type: 2,
+                            showName: showName,
+                            zdy1: "",
+                            columnDbname: columnName,
+                            columnType: columnType,
+                            fixedDownBoxValue: fixedDownBoxValue
+                        });
                     }
                 }
             }
             ////3.弹窗无，外面有-
-            for (var i = this.conditionConfig.conditionList.length - 1; i >= 0; i--) {
-                if (!this.toggleClass(this.conditionList, this.conditionConfig.conditionList[i], "columnId")) {
+            for (
+                var i = this.conditionConfig.conditionList.length - 1;
+                i >= 0;
+                i--
+            ) {
+                if (
+                    !this.toggleClass(
+                        this.conditionList,
+                        this.conditionConfig.conditionList[i],
+                        "columnId"
+                    )
+                ) {
                     this.conditionConfig.conditionList.splice(i, 1);
                 }
             }
-            this.conditionConfig.conditionList.sort(function (a, b) { return a.columnId - b.columnId; });
+            this.conditionConfig.conditionList.sort(function(a, b) {
+                return a.columnId - b.columnId;
+            });
             this.conditionVisible = false;
         },
         saveCondition() {
             this.conditionDrawer = false;
-            var a = this.conditionsConfig.conditionNodes.splice(this.bPriorityLevel - 1, 1)//截取旧下标
-            this.conditionsConfig.conditionNodes.splice(this.conditionConfig.priorityLevel - 1, 0, a[0])//填充新下标
+            var a = this.conditionsConfig.conditionNodes.splice(
+                this.bPriorityLevel - 1,
+                1
+            ); //截取旧下标
+            this.conditionsConfig.conditionNodes.splice(
+                this.conditionConfig.priorityLevel - 1,
+                0,
+                a[0]
+            ); //填充新下标
             this.conditionsConfig.conditionNodes.map((item, index) => {
-                item.priorityLevel = index + 1
+                item.priorityLevel = index + 1;
             });
-            for (var i = 0; i < this.conditionsConfig.conditionNodes.length; i++) {
-                this.conditionsConfig.conditionNodes[i].error = this.conditionStr(this.conditionsConfig.conditionNodes[i], i) === "请设置条件" && i !== this.conditionsConfig.conditionNodes.length - 1
+            for (
+                var i = 0;
+                i < this.conditionsConfig.conditionNodes.length;
+                i++
+            ) {
+                this.conditionsConfig.conditionNodes[i].error =
+                    this.conditionStr(
+                        this.conditionsConfig.conditionNodes[i],
+                        i
+                    ) === "请设置条件" &&
+                    i !== this.conditionsConfig.conditionNodes.length - 1;
             }
             this.$emit("update:nodeConfig", this.conditionsConfig);
         },
         getDebounceData(event, type = 1) {
-            this.$func.debounce(function () {
-                if (event.target.value) {
-                    if (type === 1) {
-                        this.departments.childDepartments = [];
-                        this.$axios.get(`/employees.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
-                            this.departments.employees = res.data.list
-                        })
+            this.$func.debounce(
+                function() {
+                    if (event.target.value) {
+                        if (type === 1) {
+                            this.departments.childDepartments = [];
+                            this.$axios
+                                .get(
+                                    `/employees.json?searchName=${event.target.value}&pageNum=1&pageSize=30`
+                                )
+                                .then(res => {
+                                    this.departments.employees = res.data.list;
+                                });
+                        } else {
+                            this.$axios
+                                .get(
+                                    `/figure.json?searchName=${event.target.value}&pageNum=1&pageSize=30`
+                                )
+                                .then(res => {
+                                    this.figure = res.data.list;
+                                });
+                        }
                     } else {
-                        this.$axios.get(`/roles.json?searchName=${event.target.value}&pageNum=1&pageSize=30`).then(res => {
-                            this.roles = res.data.list
-                        })
+                        type === 1
+                            ? this.getDepartmentList()
+                            : this.getRoleList();
                     }
-                } else {
-                    type === 1 ? this.getDepartmentList() : this.getRoleList();
-                }
-            }.bind(this))()
+                }.bind(this)
+            )();
         },
         handleClick() {
             this.copyerSearchName = "";
@@ -795,7 +1041,9 @@ export default {
             this.copyerEmployessList = [];
             this.copyerRoleList = [];
             for (var i = 0; i < this.copyerConfig.nodeUserList.length; i++) {
-                var { type, name, targetId } = this.copyerConfig.nodeUserList[i];
+                var { type, name, targetId } = this.copyerConfig.nodeUserList[
+                    i
+                ];
                 if (type === 1) {
                     this.copyerEmployessList.push({
                         employeeName: name,
@@ -816,29 +1064,30 @@ export default {
                     type: 1,
                     targetId: item.id,
                     name: item.employeeName
-                })
+                });
             });
             this.copyerRoleList.map(item => {
                 this.copyerConfig.nodeUserList.push({
                     type: 2,
                     targetId: item.roleId,
                     name: item.roleName
-                })
+                });
             });
             this.copyerVisible = false;
         },
         saveCopyer() {
-            this.copyerConfig.ccSelfSelectFlag = this.ccSelfSelectFlag.length === 0 ? 0 : 1;
+            this.copyerConfig.ccSelfSelectFlag =
+                this.ccSelfSelectFlag.length === 0 ? 0 : 1;
             this.copyerConfig.error = !this.copyerStr(this.copyerConfig);
             this.$emit("update:nodeConfig", this.copyerConfig);
             this.copyerDrawer = false;
         },
         copyerStr(nodeConfig) {
             if (nodeConfig.nodeUserList.length !== 0) {
-                return this.arrToStr(nodeConfig.nodeUserList)
+                return this.arrToStr(nodeConfig.nodeUserList);
             } else {
                 if (nodeConfig.ccSelfSelectFlag === 1) {
-                    return "发起人自选"
+                    return "发起人自选";
                 }
             }
         },
@@ -855,7 +1104,7 @@ export default {
                 this.approverConfig.selectMode = 1;
                 this.approverConfig.selectRange = 1;
             } else if (val === 7) {
-                this.approverConfig.examineEndDirectorLevel = 1
+                this.approverConfig.examineEndDirectorLevel = 1;
             }
         },
         addApprover() {
@@ -886,22 +1135,29 @@ export default {
         },
         sureApprover() {
             this.approverConfig.nodeUserList = [];
-            if (this.approverConfig.settype === 1 || (this.approverConfig.settype === 4 && this.approverConfig.selectRange === 2)) {
+            if (
+                this.approverConfig.settype === 1 ||
+                (this.approverConfig.settype === 4 &&
+                    this.approverConfig.selectRange === 2)
+            ) {
                 this.approverEmplyessList.map(item => {
                     this.approverConfig.nodeUserList.push({
                         type: 1,
                         targetId: item.id,
                         name: item.employeeName
-                    })
+                    });
                 });
                 this.approverVisible = false;
-            } else if (this.approverConfig.settype === 4 && this.approverConfig.selectRange === 3) {
+            } else if (
+                this.approverConfig.settype === 4 &&
+                this.approverConfig.selectRange === 3
+            ) {
                 this.roleList.map(item => {
                     this.approverConfig.nodeUserList.push({
                         type: 2,
                         targetId: item.roleId,
                         name: item.roleName
-                    })
+                    });
                 });
                 this.approverRoleVisible = false;
             }
@@ -909,43 +1165,56 @@ export default {
         setApproverStr(nodeConfig) {
             if (nodeConfig.settype === 1) {
                 if (nodeConfig.nodeUserList.length === 1) {
-                    return nodeConfig.nodeUserList[0].name
+                    return nodeConfig.nodeUserList[0].name;
                 } else if (nodeConfig.nodeUserList.length > 1) {
                     if (nodeConfig.examineMode === 1) {
-                        return this.arrToStr(nodeConfig.nodeUserList)
+                        return this.arrToStr(nodeConfig.nodeUserList);
                     } else if (nodeConfig.examineMode === 2) {
-                        return nodeConfig.nodeUserList.length + "人会签"
+                        return nodeConfig.nodeUserList.length + "人会签";
                     }
                 }
             } else if (nodeConfig.settype === 2) {
-                let level = nodeConfig.directorLevel === 1 ? '直接主管：jsh' : '第' + nodeConfig.directorLevel + '级主管'
+                let level =
+                    nodeConfig.directorLevel === 1
+                        ? "直接主管：jsh"
+                        : "第" + nodeConfig.directorLevel + "级主管";
                 if (nodeConfig.examineMode === 1) {
-                    return level
+                    return level;
                 } else if (nodeConfig.examineMode === 2) {
-                    return level + "会签"
+                    return level + "会签";
                 }
             } else if (nodeConfig.settype === 4) {
                 if (nodeConfig.selectRange === 1) {
-                    return "发起人自选"
+                    return "发起人自选";
                 } else {
                     if (nodeConfig.nodeUserList.length > 0) {
                         if (nodeConfig.selectRange === 2) {
-                            return "发起人自选"
+                            return "发起人自选";
                         } else {
-                            return '发起人从' + nodeConfig.nodeUserList[0].name + '中自选'
+                            return (
+                                "发起人从" +
+                                nodeConfig.nodeUserList[0].name +
+                                "中自选"
+                            );
                         }
                     } else {
                         return "";
                     }
                 }
             } else if (nodeConfig.settype === 5) {
-                return "发起人自己"
+                return "发起人自己";
             } else if (nodeConfig.settype === 7) {
-                return '从直接主管到通讯录中级别最高的第' + nodeConfig.examineEndDirectorLevel + '个层级主管'
+                return (
+                    "从直接主管到通讯录中级别最高的第" +
+                    nodeConfig.examineEndDirectorLevel +
+                    "个层级主管"
+                );
             }
         },
         saveApprover() {
-            this.approverConfig.error = !this.setApproverStr(this.approverConfig)
+            this.approverConfig.error = !this.setApproverStr(
+                this.approverConfig
+            );
             this.$emit("update:nodeConfig", this.approverConfig);
             this.approverDrawer = false;
         },
@@ -977,14 +1246,14 @@ export default {
                     type: 3,
                     targetId: item.id,
                     name: item.departmentName
-                })
+                });
             });
             this.checkedEmployessList.map(item => {
                 this.flowPermission1.push({
                     type: 1,
                     targetId: item.id,
                     name: item.employeeName
-                })
+                });
             });
             this.promoterVisible = false;
         },
@@ -994,100 +1263,124 @@ export default {
         },
         arrToStr(arr) {
             if (arr) {
-                return arr.map(item => { return item.name }).toString()
+                return arr
+                    .map(item => {
+                        return item.name;
+                    })
+                    .toString();
             }
         },
         toggleStrClass(item, key) {
-            let a = item.zdy1 ? item.zdy1.split(",") : []
-            return a.some(item => { return item === key });
+            let a = item.zdy1 ? item.zdy1.split(",") : [];
+            return a.some(item => {
+                return item === key;
+            });
         },
         toStrChecked(item, key) {
-            let a = item.zdy1 ? item.zdy1.split(",") : []
+            let a = item.zdy1 ? item.zdy1.split(",") : [];
             var isIncludes = this.toggleStrClass(item, key);
             if (!isIncludes) {
-                a.push(key)
-                item.zdy1 = a.toString()
+                a.push(key);
+                item.zdy1 = a.toString();
             } else {
                 this.removeStrEle(item, key);
             }
         },
         removeStrEle(item, key) {
-            let a = item.zdy1 ? item.zdy1.split(",") : []
+            let a = item.zdy1 ? item.zdy1.split(",") : [];
             var includesIndex;
             a.map((item, index) => {
                 if (item == key) {
-                    includesIndex = index
+                    includesIndex = index;
                 }
             });
             a.splice(includesIndex, 1);
-            item.zdy1 = a.toString()
+            item.zdy1 = a.toString();
         },
-        toggleClass(arr, elem, key = 'id') {
-            return arr.some(item => { return item[key] == elem[key] });
+        toggleClass(arr, elem, key = "id") {
+            return arr.some(item => {
+                return item[key] == elem[key];
+            });
         },
-        toChecked(arr, elem, key = 'id') {
+        toChecked(arr, elem, key = "id") {
             var isIncludes = this.toggleClass(arr, elem, key);
             !isIncludes ? arr.push(elem) : this.removeEle(arr, elem, key);
         },
-        removeEle(arr, elem, key = 'id') {
+        removeEle(arr, elem, key = "id") {
             var includesIndex;
             arr.map((item, index) => {
                 if (item[key] == elem[key]) {
-                    includesIndex = index
+                    includesIndex = index;
                 }
             });
             arr.splice(includesIndex, 1);
         },
         getRoleList() {
-            this.$axios.get("/roles.json").then(res => {
-                this.roles = res.data.list;
-            })
+            this.$axios.get("/figure.json").then(res => {
+                this.figure = res.data.list;
+            });
         },
         getDepartmentList(parentId = 0) {
-            this.$axios.get("/departments.json?parentId=" + parentId).then(res => {
-                this.departments = res.data;
-            })
+            this.$axios
+                .get("/departments.json?parentId=" + parentId)
+                .then(res => {
+                    this.departments = res.data;
+                });
         },
         delNode() {
+            this.setReduceBoxNum()
             this.$emit("update:nodeConfig", this.nodeConfig.childNode);
+            console.log(this.boxNum)
         },
         addTerm() {
-            let len = this.nodeConfig.conditionNodes.length + 1
+            let len = this.nodeConfig.conditionNodes.length + 1;
             this.nodeConfig.conditionNodes.push({
-                "nodeName": "编辑条件" + len,
-                "type": 3,
-                "priorityLevel": len,
-                "conditionList": [],
-                "nodeUserList": [],
-                "childNode": null
+                nodeName: "编辑条件" + len,
+                type: 3,
+                priorityLevel: len,
+                conditionList: [],
+                nodeUserList: [],
+                childNode: null
             });
             for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) === "请设置条件" && i !== this.nodeConfig.conditionNodes.length - 1
+                this.nodeConfig.conditionNodes[i].error =
+                    this.conditionStr(this.nodeConfig.conditionNodes[i], i) ===
+                        "请设置条件" &&
+                    i !== this.nodeConfig.conditionNodes.length - 1;
             }
             this.$emit("update:nodeConfig", this.nodeConfig);
         },
         delTerm(index) {
-            this.nodeConfig.conditionNodes.splice(index, 1)
+            this.nodeConfig.conditionNodes.splice(index, 1);
             for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) === "请设置条件" && i !== this.nodeConfig.conditionNodes.length - 1
+                this.nodeConfig.conditionNodes[i].error =
+                    this.conditionStr(this.nodeConfig.conditionNodes[i], i) ===
+                        "请设置条件" &&
+                    i !== this.nodeConfig.conditionNodes.length - 1;
             }
             this.$emit("update:nodeConfig", this.nodeConfig);
             if (this.nodeConfig.conditionNodes.length === 1) {
                 if (this.nodeConfig.childNode) {
                     if (this.nodeConfig.conditionNodes[0].childNode) {
-                        this.reData(this.nodeConfig.conditionNodes[0].childNode, this.nodeConfig.childNode)
+                        this.reData(
+                            this.nodeConfig.conditionNodes[0].childNode,
+                            this.nodeConfig.childNode
+                        );
                     } else {
-                        this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode
+                        this.nodeConfig.conditionNodes[0].childNode = this.nodeConfig.childNode;
                     }
                 }
-                this.$emit("update:nodeConfig", this.nodeConfig.conditionNodes[0].childNode);
+                this.$emit(
+                    "update:nodeConfig",
+                    this.nodeConfig.conditionNodes[0].childNode
+                );
             }
         },
         reData(data, addData) {
             if (!data.childNode) {
-                data.childNode = addData
+                data.childNode = addData;
             } else {
-                this.reData(data.childNode, addData)
+                this.reData(data.childNode, addData);
             }
         },
         setPerson(priorityLevel) {
@@ -1097,26 +1390,47 @@ export default {
                 this.flowPermission1 = this.flowPermission;
             } else if (type == 1) {
                 this.approverDrawer = true;
-                this.approverConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-                this.approverConfig.settype = this.approverConfig.settype ? this.approverConfig.settype : 1
+                this.approverConfig = JSON.parse(
+                    JSON.stringify(this.nodeConfig)
+                );
+                this.approverConfig.settype = this.approverConfig.settype
+                    ? this.approverConfig.settype
+                    : 1;
             } else if (type == 2) {
                 this.copyerDrawer = true;
-                this.copyerConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-                this.ccSelfSelectFlag = this.copyerConfig.ccSelfSelectFlag == 0 ? [] : [this.copyerConfig.ccSelfSelectFlag]
+                this.copyerConfig = JSON.parse(JSON.stringify(this.nodeConfig));
+                this.ccSelfSelectFlag =
+                    this.copyerConfig.ccSelfSelectFlag == 0
+                        ? []
+                        : [this.copyerConfig.ccSelfSelectFlag];
             } else {
-                this.conditionDrawer = true
+                this.conditionDrawer = true;
                 this.bPriorityLevel = priorityLevel;
-                this.conditionsConfig = JSON.parse(JSON.stringify(this.nodeConfig))
-                this.conditionConfig = this.conditionsConfig.conditionNodes[priorityLevel - 1]
+                this.conditionsConfig = JSON.parse(
+                    JSON.stringify(this.nodeConfig)
+                );
+                this.conditionConfig = this.conditionsConfig.conditionNodes[
+                    priorityLevel - 1
+                ];
             }
         },
-        arrTransfer(index, type = 1) {//向左-1,向右1
-            this.nodeConfig.conditionNodes[index] = this.nodeConfig.conditionNodes.splice(index + type, 1, this.nodeConfig.conditionNodes[index])[0];
+        arrTransfer(index, type = 1) {
+            //向左-1,向右1
+            this.nodeConfig.conditionNodes[
+                index
+            ] = this.nodeConfig.conditionNodes.splice(
+                index + type,
+                1,
+                this.nodeConfig.conditionNodes[index]
+            )[0];
             this.nodeConfig.conditionNodes.map((item, index) => {
-                item.priorityLevel = index + 1
-            })
+                item.priorityLevel = index + 1;
+            });
             for (var i = 0; i < this.nodeConfig.conditionNodes.length; i++) {
-                this.nodeConfig.conditionNodes[i].error = this.conditionStr(this.nodeConfig.conditionNodes[i], i) == "请设置条件" && i !== this.nodeConfig.conditionNodes.length - 1
+                this.nodeConfig.conditionNodes[i].error =
+                    this.conditionStr(this.nodeConfig.conditionNodes[i], i) ==
+                        "请设置条件" &&
+                    i !== this.nodeConfig.conditionNodes.length - 1;
             }
             this.$emit("update:nodeConfig", this.nodeConfig);
         }
@@ -1124,11 +1438,10 @@ export default {
     components: {
         addNode
     }
-}
+};
 </script>
 
 <style scoped >
-
 .error_tip {
     position: absolute;
     top: 0px;

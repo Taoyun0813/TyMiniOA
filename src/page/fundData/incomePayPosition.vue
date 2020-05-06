@@ -1,7 +1,7 @@
 <template>
     <div class="fillcontain">
         <div class="fillcontainer" ref="fillcontainer">
-           <div id="incomePayPosition" class="echartsPosition"></div> 
+           <div id="incomePayPosition" class="echartsPosition"></div>
         </div>
     </div>
 </template>
@@ -63,7 +63,7 @@
                     backgroundColor: '#CCFFCC',
                 title: {
                     text: '收支统计',
-                    subtext: '单位/万元',
+                    subtext: '单位/元',
                     x: '4%',
                     textStyle: {
                         color: '#000000',
@@ -74,7 +74,7 @@
                         fontSize: '12'
                     }
                 },
-                tooltip: { 
+                tooltip: {
                     trigger: 'axis',
                     axisPointer: {
                     textStyle: {
@@ -156,7 +156,7 @@
                        color: '#336699'
                     },
                     textStyle: {
-                       color: '#000' 
+                       color: '#000'
                     },
                     borderColor: '#339999'
                 }, {
@@ -234,7 +234,7 @@
 
 
 <style lang="less" scoped>
-     
+
 </style>
 
 

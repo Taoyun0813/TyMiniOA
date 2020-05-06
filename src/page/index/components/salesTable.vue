@@ -51,7 +51,7 @@
           <span v-if="scope.row.status === 4" class="likeBgcolor">LIKE</span>
         </template>
       </el-table-column>
-    
+
     </el-table>
   </div>
 </template>
@@ -74,7 +74,6 @@
         // 获取列表数据
         getSalesList(){
             getSalesTableList({}).then(res => {
-                console.log(res);
                 this.pageTotal = res.data.total
                 this.tableData = res.data.list
             })

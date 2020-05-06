@@ -34,7 +34,7 @@
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="submitForm('infoForm')">提交</el-button>
-                        <el-button @click="resetForm('infoForm')">重置</el-button>
+                        <el-button @click="resetForm('infoForm')">结束流程</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -56,7 +56,7 @@
                             </el-form-item>
                             <el-form-item>
                                 <el-button type="primary" @click="submitForm('pwdForm')">提交</el-button>
-                                <el-button @click="resetForm('pwdForm')">重置</el-button>
+                                <el-button @click="resetForm('pwdForm')">结束流程</el-button>
                             </el-form-item>
                             </el-form>
                     </div>
@@ -87,10 +87,10 @@
                                         <el-checkbox label="优质标提醒通知" name="changeType"></el-checkbox>
                                     </el-checkbox-group>
                                 </el-form-item>
-                        
+
                             <el-form-item>
                                 <el-button type="primary" @click="submitForm('phoneForm')">提交</el-button>
-                                <el-button @click="resetForm('phoneForm')">重置</el-button>
+                                <el-button @click="resetForm('phoneForm')">结束流程</el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -206,13 +206,13 @@
                         { type: 'array', required: true, message: '请至少选择一个可选短信服务', trigger: 'change' }
                    ],
                },
-             
+
             };
-           
+
 
         },
         created(){
-           
+
         },
       	mounted() {
             // mutils.setContentHeight(this,this.$refs.fillcontain,170);

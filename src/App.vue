@@ -1,12 +1,25 @@
 <template>
     <div id="app">
-		   <router-view></router-view>
+		<router-view></router-view>
+        <msg :msg="getMessage" :active="showMessage" v-if="showMessage" />
+        <editor v-if="noticeClose" />
     </div>
 </template>
 
 <script>
+    import msg from "@/components/message"
+    import editor from "@/components/editor"
+    import {mapGetters,mapActions} from "vuex"
+
     export default {
-    	name:'App'
+        name:'App',
+        computed: {
+            ...mapGetters(["getMessage","showMessage","noticeClose"])
+        },
+        components: {
+            msg,
+            editor
+        }
     }
 </script>
 

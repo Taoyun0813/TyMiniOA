@@ -1,12 +1,12 @@
 <template>
     <div class="fillcontain">
         <div class="fillcontainer" ref="fillcontainer">
-            <el-row :gutter="10"> 
+            <el-row :gutter="10">
                 <el-col :span="12" style="height:100%;">
-                    <div id="typePosition"></div> 
+                    <div id="typePosition"></div>
                 </el-col>
                 <el-col :span="12" style="height:100%;">
-                    <div id="typePosition2"></div> 
+                    <div id="typePosition2"></div>
                 </el-col>
             </el-row>
        </div>
@@ -39,15 +39,15 @@
             return Math.round(Math.random()*1000000);
           },
           drawpie(id, radius, centery) {
-            if ( this.chart &&  this.chart.dispose) { 
-                 this.chart.dispose(); 
-            } 
+            if ( this.chart &&  this.chart.dispose) {
+                 this.chart.dispose();
+            }
             this.chart = echarts.init(document.getElementById(id), 'vintage');
             this.chart.setOption({
                 angleAxis: {},
                 radiusAxis: {
                     type: 'category',
-                    data: ['2011年', '2012年', '2013年', '2014年', '2015年', '2016年', '2017年'],
+                    data: ['2013年', '2015年', '2016年', '2017年', '2018年', '2019年', '2020年'],
                     z: 10
                 },
                 polar: {},
@@ -89,14 +89,14 @@
             });
           },
           drawbar(id){
-            if ( this.chart_bar &&  this.chart_bar.dispose) { 
-                this.chart_bar.dispose(); 
-            } 
+            if ( this.chart_bar &&  this.chart_bar.dispose) {
+                this.chart_bar.dispose();
+            }
             this.chart_bar = echarts.init(document.getElementById(id),'vintage');
             this.chart_bar.setOption({
                  angleAxis: {
                         type: 'category',
-                        data: ['2011年', '2012年', '2013年', '2014年', '2015年', '2016年', '2017年'],
+                        data: ['2013年', '2015年', '2016年', '2017年', '2018年', '2019年', '2020年'],
                         z: 10
                     },
                     radiusAxis: {},
@@ -163,7 +163,7 @@
         height: 530px;
         padding: 10px;
         border-radius: 10px;
-     }	
+     }
 </style>
 
 

@@ -15,11 +15,11 @@
                 <el-col :span="5">
                 <div class="area">
                     <div class="namearea">
-                        <p>姓名：王小川</p>
-                        <p>昵称：PW68061826</p>
+                        <p>姓名：Ty.xeymsts</p>
+                        <p>昵称：止若自安</p>
                         <p>投资年限：5年</p>
-                        <p>绑定邮箱：9061446xx@qq.com</p>
-                        <p>绑定手机：189xxxx9028</p>
+                        <p>绑定邮箱：819390xx@qq.com</p>
+                        <p>绑定手机：185xxxx6403</p>
                         <p class="awards"><i class="el-icon-date el-icon--left"></i>签到有奖</p>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         </p>
                     </div>
                     <div class="tipsarea">
-                        <p>您的每笔交易资金，都将接受银行全程存管   <a href="http://www.baidu.com" target="_blank">了解资金存管 》</a></p>
+                        <p>您的每笔交易资金，都将接受银行全程存管   <a href="http://user.qzone.qq.com/819390559/infocenter" target="_blank">了解资金存管 》</a></p>
                     </div>
                 </div>
                 </el-col>
@@ -117,11 +117,11 @@
         data(){
             return {
                bandata:[
-                   {url:'http://www.baidu.com',data:300},
-                   {url:'http://www.sina.com',data:200},
-                   {url:'http://www.360.com',data:100},
-                   {url:'http://www.weibo.com',data:0},
-                   {url:'http://www.hao123.com',data:100},
+                   {url:'http://github.com/Taoyun0813/TyMiniOA',data:300},
+                   {url:'http://github.com/Taoyun0813/TyMiniOA',data:200},
+                   {url:'http://github.com/Taoyun0813/TyMiniOA',data:100},
+                   {url:'http://github.com/Taoyun0813/TyMiniOA',data:0},
+                   {url:'http://github.com/Taoyun0813/TyMiniOA',data:100},
                ],
                avatarImg: require('@/assets/img/avatar-2.jpg'),
                toMPicimg: require('@/assets/img/toMPic02.png')

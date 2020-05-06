@@ -5,20 +5,23 @@ import store from './store/'
 import func from '@/utils/preload.js'
 // 'development',use package;'production':use cdn;
 import ElementUI from 'element-ui'
-import {
-    Message,
-} from "element-ui"
-Vue.use(ElementUI, {
-  size: 'mini'
-});
+import VueQuillEditor  from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+
 import '@/css/override-element-ui.css'
+import "@/css/style.css"
 import('element-ui/lib/theme-chalk/index.css')
+import '@/assets/font/iconfont.css'
 
 import './components/iconSvg' // iconSvg
 
 import '@/permission' // permission control
 
 import '@/mockjs'; // mock数据
+import "@/assets/font/iconfont"
 
 // i18n国际化
 import i18n from "@/lang";
@@ -27,14 +30,18 @@ import i18n from "@/lang";
 import {
   shareConfig
 } from './utils/share';
+Vue.use(ElementUI, {
+  size: 'mini'
+});
+Vue.use(VueQuillEditor)
 
 Vue.prototype.$func = func;
 
 Vue.config.productionTip = false;
 Vue.directive('enterNumber', {
     bind: function(el, { value = 2 }) {
-        el = el.nodeName == "INPUT" ? el : el.children[0]
-        var RegStr = value == 0 ? `^[\\+\\-]?\\d+\\d{0,0}` : `^[\\+\\-]?\\d+\\.?\\d{0,${value}}`;
+        el = el.nodeName === "INPUT" ? el : el.children[0]
+        var RegStr = value === 0 ? `^[\\+\\-]?\\d+\\d{0,0}` : `^[\\+\\-]?\\d+\\.?\\d{0,${value}}`;
         el.addEventListener('keyup', function() {
             el.value = el.value.match(new RegExp(RegStr, 'g'));
             el.dispatchEvent(new Event('input'))
@@ -49,16 +56,7 @@ Vue.directive('focus', {
     }
 });
 
-/*Vue.prototype.$message = {
-  error(msg) {
-    Message.closeAll();
-    Message.error(msg)
-  },
-  success(msg) {
-    Message.closeAll();
-    Message.success(msg)
-  }
-}*/
+
 
 Vue.prototype.shareConfig = shareConfig;
 

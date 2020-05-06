@@ -30,7 +30,7 @@
             this.chart.setOption({
                 title: {
                     text: '2019年全国各省份投资情况',
-                    subtext: '单位/万元',
+                    subtext: '单位/元',
                     left: 'center'
                 },
                 tooltip: {

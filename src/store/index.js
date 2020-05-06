@@ -8,13 +8,17 @@ import user from './modules/user'
 import permission from './modules/permission'
 import money from './modules/money'
 import menu from './modules/menu'
+import boxNum from "./modules/boxNum"
+import msg from "./modules/utils"
 
 export default new Vuex.Store({
     modules: {
         user,
         permission,
         money,
-        menu
+        menu,
+        boxNum,
+        msg
     }
 });
 

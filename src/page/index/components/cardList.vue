@@ -9,22 +9,22 @@
           </a>
           <div class="progress wflex">
             <div class="rflex">
-              <span class="title">vue:</span><el-progress :percentage="100" status="success"></el-progress>
+              <span class="title">基金:</span><el-progress :percentage="100" status="success"></el-progress>
             </div>
             <div class="rflex">
-              <span class="title">js:</span><el-progress :percentage="80"></el-progress>
+              <span class="title">期货:</span><el-progress :percentage="80"></el-progress>
             </div>
             <div class="rflex">
-              <span class="title">css:</span><el-progress :percentage="60"></el-progress>
+              <span class="title">大盘:</span><el-progress :percentage="60"></el-progress>
             </div>
             <div class="rflex">
-              <span class="title">html:</span><el-progress :percentage="90"></el-progress>
+              <span class="title">债券:</span><el-progress :percentage="90"></el-progress>
             </div>
             <div class="rflex">
-              <span class="title">react:</span><el-progress :percentage="0"></el-progress>
+              <span class="title">储蓄:</span><el-progress :percentage="0"></el-progress>
             </div>
             <div class="rflex">
-              <span class="title">angular:</span><el-progress :percentage="0"></el-progress>
+              <span class="title">股票:</span><el-progress :percentage="0"></el-progress>
             </div>
           </div>
         </el-card>
@@ -79,7 +79,7 @@ export default {
     font-size: 13px;
     color: #999;
   }
-  
+
   .bottom {
     margin-top: 13px;
     line-height: 12px;
@@ -100,7 +100,7 @@ export default {
       display: table;
       content: "";
   }
-  
+
   .clearfix:after {
       clear: both
   }
